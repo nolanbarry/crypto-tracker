@@ -1,0 +1,6 @@
+#sidebar {
+  background-color: #95d5b2;
+  width: 200px;
+  z-index: -1;
+  /* height set with js */
+}
