@@ -16,6 +16,9 @@ fetch(coinRankAllURL, {headers: { 'x-access-token': coinRankKey }})
   }
 });
 
+/*** HELPER FUNCTIONS ***/
+// function to create an element
+// options is an object with properties of element
 function element(type, options, ...children) {
   let element = document.createElement(type);
   for(let key of Object.keys(options)) {
@@ -28,6 +31,7 @@ function element(type, options, ...children) {
 }
 
 function determineCoinChangeClass(change) {
+  change = truncateDecimal(change, 2);
   if (change < 0) return 'loss';
   if (change > 0) return 'gain';
   return 'no-change';
@@ -36,11 +40,15 @@ function determineCoinChangeClass(change) {
 function truncateNumber(price, totalDigitCount) {
   if (Number.isInteger(price)) return price;
   ++totalDigitCount; // account for decimal as character
-  return price.slice(0, totalDigitCount + 1).toLocaleString(undefined,  { minimumFractionDigits: 2 });
+  return price.slice(0, totalDigitCount + 1);
 }
 
 function truncateDecimal(value, decimals) {
-  return Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals).toLocaleString(undefined,  { minimumFractionDigits: 2 });
+  return Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
+}
+
+function beautify(num) {
+  return num.toLocaleString(undefined,  { minimumFractionDigits: 2 });
 }
 
 function createCoinSidebarListing(coin) {
@@ -49,10 +57,14 @@ function createCoinSidebarListing(coin) {
   let abbrev = element('h1', {className: 'sidebar-abbrev', innerHTML: coin.symbol});
   let heading = element('div', {className: 'container sidebar-heading'}, name, abbrev);
   // subheading
-  let price = element('h2', {className: 'sidebar-price', innerHTML: truncateNumber(coin.price, 7)});
-  let percentChange = element('h2', {innerHTML: truncateDecimal(coin.change, 2), className: 'sidebar-change ' + determineCoinChangeClass(coin.change)});
+  let price = element('h2', {className: 'sidebar-price', innerHTML: beautify(truncateNumber(coin.price, 7))});
+  let percentChange = element('h2', {innerHTML: beautify(truncateDecimal(Math.abs(coin.change), 2)), className: 'sidebar-change ' + determineCoinChangeClass(coin.change)});
   let subheading = element('div', {className: 'container price-subheading'}, price, percentChange);
   // combine into listing
-  let listing = element('div', {className: 'sidebar-listing'}, heading, subheading);
+  let listing = element('a', {className: 'sidebar-listing', id: coin.symbol, href: `#${coin.symbol}`}, heading, subheading);
   return listing;
+}
+
+function updateCoinPrice(coin) {
+  let listing = document.getElementById(coin.symbol);
 }
