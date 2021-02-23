@@ -1,20 +1,28 @@
 // on page load:
-
+let coins;
+let coinsLoaded = false;
+retrieveCoinData();
+setInterval(retrieveCoinData, 1000);
+/*** API CALLS ***/
 /* https://www.coingecko.com/en/api */
 /* https://developers.coinranking.com/api/documentation/ */
-let coinRankKey = 'coinranking0c56a9b857f065ff49e44335d35cdb0b328a7c22e16b269d';
-let coinRankAllURL = 'https://api.coinranking.com/v2/coins';
-let coins;
-fetch(coinRankAllURL, {headers: { 'x-access-token': coinRankKey }})
-.then(function(response) {
-  return response.json();
-}).then(function(data) {
-  coins = data.data.coins;
-  let sidebar = document.getElementById('sidebar');
-  for(let coin of coins) {
-    sidebar.appendChild(createCoinSidebarListing(coin));
-  }
-});
+
+function retrieveCoinData() {
+  let coinRankKey = 'coinranking0c56a9b857f065ff49e44335d35cdb0b328a7c22e16b269d';
+  let coinRankAllURL = 'https://api.coinranking.com/v2/coins';
+  fetch(coinRankAllURL, {headers: { 'x-access-token': coinRankKey }})
+  .then(function(response) {
+    return response.json();
+  }).then(function(data) {
+    coins = data.data.coins;
+    let sidebar = document.getElementById('sidebar');
+    for(let coin of coins) {
+      if (coinsLoaded) updateCoinPrice(coin);
+      else sidebar.appendChild(createCoinSidebarListing(coin));
+    }
+    coinsLoaded = true;
+  });
+}
 
 /*** HELPER FUNCTIONS ***/
 // function to create an element
@@ -58,7 +66,7 @@ function createCoinSidebarListing(coin) {
   let heading = element('div', {className: 'container sidebar-heading'}, name, abbrev);
   // subheading
   let price = element('h2', {className: 'sidebar-price', innerHTML: beautify(truncateNumber(coin.price, 7))});
-  let percentChange = element('h2', {innerHTML: beautify(truncateDecimal(Math.abs(coin.change), 2)), className: 'sidebar-change ' + determineCoinChangeClass(coin.change)});
+  let percentChange = element('h2', {className: 'sidebar-change ' + determineCoinChangeClass(coin.change), innerHTML: beautify(truncateDecimal(Math.abs(coin.change), 2))});
   let subheading = element('div', {className: 'container price-subheading'}, price, percentChange);
   // combine into listing
   let listing = element('a', {className: 'sidebar-listing', id: coin.symbol, href: `#${coin.symbol}`}, heading, subheading);
@@ -67,4 +75,9 @@ function createCoinSidebarListing(coin) {
 
 function updateCoinPrice(coin) {
   let listing = document.getElementById(coin.symbol);
+  let price = listing.getElementsByClassName('sidebar-price')[0];
+  let change = listing.getElementsByClassName('sidebar-change')[0];
+  price.innerHTML = beautify(truncateNumber(coin.price, 7));
+  change.innerHTML = beautify(truncateDecimal(Math.abs(coin.change), 2));
+  change.className = 'sidebar-change ' + determineCoinChangeClass(coin.change);
 }
