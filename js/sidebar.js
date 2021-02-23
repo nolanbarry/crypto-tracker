@@ -23,8 +23,10 @@ sidebar.addEventListener('scroll', () => {
 
   if (currentScroll > lastScroll && !search.classList.contains(scrollDown)) {
     // down
+    if (searchText = document.querySelector('#sidebar-search').value == '') {
     search.classList.remove(scrollUp);
     search.classList.add(scrollDown);
+  }
   } else if (currentScroll < lastScroll && search.classList.contains(scrollDown)) {
     // up
     search.classList.remove(scrollDown);
@@ -41,6 +43,7 @@ function performSearchFiltering() {
       document.getElementById(coin.symbol).style.display = 'initial';
       continue;
     }
+    sidebar.scrollTop = 0;
     let key = (coin.name + coin.symbol).toUpperCase();
     if(key.includes(searchText))
       document.getElementById(coin.symbol).style.display = 'initial';
