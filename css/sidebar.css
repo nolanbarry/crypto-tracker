@@ -1,6 +1,97 @@
+/* https://codepen.io/devstreak/pen/dMYgeO */
+/* custom scrollbar works only on webkit browsers */
+/* Chrome, Edge (chromium), Opera, Safari */
+#sidebar::-webkit-scrollbar-track {}
+
+#sidebar::-webkit-scrollbar {
+  width: 5px;
+  background-color: #95d5b2;
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: rgba(100, 100, 100, 0.5);
+}
+
 #sidebar {
   background-color: #95d5b2;
-  width: 200px;
+  width: 350px;
+  height: 90vh;
   z-index: -1;
-  /* height set with js */
+  display: flex;
+  flex-flow: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.sidebar-listing {
+  position: static;
+  user-select: none;
+  z-index: 0;
+  background-color: rgba(240, 240, 240, 0.5);
+  border-radius: 5px;
+  margin: 5px 10px;
+  padding: 10px;
+}
+
+.sidebar-name {
+  font-family: nunito, sans-serif;
+  font-weight: 300;
+  font-size: 25px;
+}
+
+.sidebar-abbrev {
+  font-family: inter, sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: rgb(50, 50, 50);
+  background-color: rgb(230, 230, 230);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  margin: 3px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-price::before {
+  content: '$';
+}
+
+.sidebar-price {
+  font-family: nunito;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.sidebar-change {
+  margin: 3px 10px;
+  font-family: nunito;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.gain::before {
+  content: '+';
+}
+
+.gain::after,
+.loss::after,
+.no-change::after {
+  content: '%';
+}
+
+.loss {
+  color: #ff0000;
+}
+
+.gain {
+  color: #4DB385;
+}
+
+.no-change {
+  color: #ffff00;
 }
