@@ -3,7 +3,6 @@
   background-color: #1A412C;
   padding: 10px;
   border-radius: 15px;
-  max-width: 300px;
 }
 
 .closed {
@@ -76,6 +75,14 @@
   width: 100%;
 }
 
+@media only screen and (max-width: 600px) {
+  #filter {
+    width: 100w;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
 @media only screen and (min-width: 601px) {
   #filter::before {
     content: "";
@@ -86,5 +93,6 @@
     border: solid 15px transparent;
     border-right-color: #1A412C;
     z-index: 1;
+    max-width: 300px;
   }
 }

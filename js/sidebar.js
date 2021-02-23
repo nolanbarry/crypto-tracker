@@ -15,7 +15,9 @@ let lastScroll = 0;
 sidebar.addEventListener('scroll', () => {
   search.style.top = sidebar.scrollTop + "px";
   const currentScroll = sidebar.scrollTop;
-  if (currentScroll <= 0) {
+  if (currentScroll <= 0 ||
+    (document.querySelector('#filter').style.display = 'initial' &&
+    currentScroll <= document.querySelector('#filter').clientHeight)) {
     search.classList.remove(scrollUp);
     return;
   }
@@ -69,7 +71,6 @@ let maxOpacity = 0.3
 let fade = {fadeIn: false, running: false};
 function searchClearFade(fadeIn) {
   fade.fadeIn = fadeIn;
-  console.log(fade.running);
   function fadeAnim(currentTime, oldTime) {
     fade.running = true;
     if (oldTime == null) oldTime = currentTime;
@@ -89,10 +90,8 @@ function searchClearFade(fadeIn) {
 
 /*** sidebar filter ***/
 let filterBox = document.querySelector('#filter');
-// document.body.remove(filterBox);
 // show/hide filters
 document.querySelector('#sidebar-search-filter-toggle').addEventListener('click', () => {
-  console.log('click');
   if (filterBox.classList.contains('closed')) {
     // open filters
     // desktop
@@ -100,17 +99,23 @@ document.querySelector('#sidebar-search-filter-toggle').addEventListener('click'
       filterBox.style.position = 'fixed';
       filterBox.style.left = sidebar.clientWidth + "px";
       filterBox.style.top = document.querySelector('#header').clientHeight + 10 + 'px';
-      document.after(filterBox);
+      filterBox.style.margin = '0';
+      sidebar.after(filterBox);
+      filterBox.classList.remove('closed');
     } // mobile
     else {
+      filterBox.style.margin = '10px';
       filterBox.style.position = 'static';
       search.after(filterBox);
+      slideFilterBox(true);
     }
-    filterBox.classList.remove('closed');
   } else {
     // close filters
-    filterBox.classList.add('closed');
-    document.remove(filterBox);
+    if (window.innerWidth <= 600) {
+      slideFilterBox(false);
+    } else {
+      filterBox.classList.add('closed');
+    }
   }
 });
 // clear filters button
@@ -120,3 +125,30 @@ document.querySelector('#filter-clear').addEventListener('click', () => {
     element.value = '';
   }
 })
+// filter slide animation
+let filterSlide = {slideOut: false, running: false, margin: 0};
+function slideFilterBox(slide) {
+  if(slide) {
+    filterBox.classList.remove('closed');
+    filterBox.style.marginTop = "-" + (filterBox.clientHeight) + "px";
+  }
+  let targetPosition = filterBox.clientHeight + 20;
+  filterSlide.slideOut = slide;
+  function slideAnim() {
+    filterSlide.running = true;
+    let target = filterSlide.slideOut ? targetPosition : 0;
+    filterSlide.margin += (target - filterSlide.margin) / 4;
+    filterBox.style.marginTop = -1 * (targetPosition - filterSlide.margin - 10) + "px";
+    if (Math.abs(target - filterSlide.margin) < 0.1) {
+      filterSlide.margin = target;
+      filterBox.style.marginTop = -1 * (targetPosition - filterSlide.margin - 10) + "px";
+      filterSlide.running = false;
+      if (filterSlide.margin == 0) {
+        filterBox.classList.add('closed');
+      }
+    } else requestAnimationFrame(slideAnim);
+  }
+  if (!filterSlide.running) {
+    requestAnimationFrame(slideAnim);
+  }
+}
