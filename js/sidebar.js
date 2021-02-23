@@ -77,9 +77,8 @@ function searchClearFade(fadeIn) {
     let target = fade.fadeIn ? maxOpacity : 0;
     let img = document.querySelector('#sidebar-search-clear img');
     img.style.opacity = Number(img.style.opacity) + (currentTime - oldTime) / 500 * (fade.fadeIn ? 1 : -1);
-    if (fade.fadeIn && img.style.opacity > target) img.style.opacity = target;
-    else if (!fade.fadeIn && img.style.opacity <= 0) img.style.opacity = 0;
-    if (img.style.opacity == target) {
+    if (Math.abs(img.style.opacity - target) < 0.1) {
+      img.style.opacity = target;
       fade.running = false;
     } else requestAnimationFrame(newTime => fadeAnim(newTime, currentTime));
   }
@@ -97,11 +96,11 @@ document.querySelector('#sidebar-search-filter-toggle').addEventListener('click'
     // desktop
     if (window.innerWidth > 600) {
       filterBox.style.position = 'fixed';
-      filterBox.style.left = sidebar.clientWidth + "px";
+      filterBox.style.left = sidebar.clientWidth + 20 + "px";
       filterBox.style.top = document.querySelector('#header').clientHeight + 10 + 'px';
       filterBox.style.margin = '0';
       sidebar.after(filterBox);
-      filterBox.classList.remove('closed');
+      fadeFilterBox(true);
     } // mobile
     else {
       filterBox.style.margin = '10px';
@@ -114,7 +113,7 @@ document.querySelector('#sidebar-search-filter-toggle').addEventListener('click'
     if (window.innerWidth <= 600) {
       slideFilterBox(false);
     } else {
-      filterBox.classList.add('closed');
+      fadeFilterBox(false);
     }
   }
 });
@@ -125,13 +124,14 @@ document.querySelector('#filter-clear').addEventListener('click', () => {
     element.value = '';
   }
 })
-// filter slide animation
+// filter slide animation for mobile styles only
 let filterSlide = {slideOut: false, running: false, margin: 0};
 function slideFilterBox(slide) {
   if(slide) {
     filterBox.classList.remove('closed');
     filterBox.style.marginTop = "-" + (filterBox.clientHeight) + "px";
   }
+  filterBox.style.opacity = 1;
   let targetPosition = filterBox.clientHeight + 20;
   filterSlide.slideOut = slide;
   function slideAnim() {
@@ -150,5 +150,30 @@ function slideFilterBox(slide) {
   }
   if (!filterSlide.running) {
     requestAnimationFrame(slideAnim);
+  }
+}
+
+// filter fade animation for non-mobile styles
+let filterFade = {fadeIn: false, running: false}
+function fadeFilterBox(fadeIn) {
+  if(fadeIn) {
+    filterBox.style.opacity = 0;
+    filterBox.classList.remove('closed');
+  }
+  filterFade.fadeIn = fadeIn;
+  function fadeAnim(currentTime, oldTime) {
+    filterFade.running = true;
+    if (oldTime == null) oldTime = currentTime;
+    let target = filterFade.fadeIn ? 1 : 0;
+    filterBox.style.opacity = Number(filterBox.style.opacity) + (currentTime - oldTime) / 75 * (filterFade.fadeIn ? 1 : -1);
+    if (Math.abs(filterBox.style.opacity) > 1) {
+      filterBox.style.opacity = target;
+      filterFade.running = false;
+      if (!filterFade.fadeIn) filterBox.classList.add('closed');
+      console.log('done');
+    } else requestAnimationFrame(newTime => fadeAnim(newTime, currentTime));
+  }
+  if (!filterFade.running) {
+    requestAnimationFrame(fadeAnim);
   }
 }

@@ -87,12 +87,16 @@
   #filter::before {
     content: "";
     position: absolute;
-    top: 20%;
-    margin-top: -15px;
-    left: -30px;
-    border: solid 15px transparent;
+    top: 7%;
+    left: -20px;
+    border: solid 10px transparent;
     border-right-color: #1A412C;
     z-index: 1;
+  }
+
+  #filter {
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
     max-width: 300px;
+    border-top-left-radius: 8px;
   }
 }
