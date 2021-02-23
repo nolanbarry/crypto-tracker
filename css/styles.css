@@ -30,3 +30,15 @@ body {
 .column {
   flex-flow: column;
 }
+
+.space-between {
+  justify-content: space-between;
+}
+
+.right {
+  justify-content: flex-end;
+}
+
+.center {
+  justify-content: center;
+}

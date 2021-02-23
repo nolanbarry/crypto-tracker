@@ -13,6 +13,7 @@
   <link rel='stylesheet' href='css/styles.css'>
   <link rel='stylesheet' href='css/header.css'>
   <link rel='stylesheet' href='css/sidebar.css'>
+  <link rel='stylesheet' href='css/sidebar-filter.css'>
 </head>
 
 <body>
@@ -22,11 +23,44 @@
   <div id='container'>
     <div id='sidebar'>
       <form id='sidebar-search-container'>
-        <input id='sidebar-search' autocomplete='off' autocapitalize='off' autocorrect='off' spellcheck='false'>
+        <input id='sidebar-search' placeholder='search' autocomplete='off' autocapitalize='off' autocorrect='off' spellcheck='false'>
         <button id='sidebar-search-clear' type='button'><img src='/images/clear.svg' style='opacity: 0'></button>
         <button id='sidebar-search-filter-toggle' type='button'><img src='/images/filter.svg'></button>
       </form>
     </div>
+    <form id='filter' class='closed'>
+      <div class='container space-between'>
+        <label class='filter filter-header'>SEARCH FILTERS</label>
+        <button id='filter-clear' class='img-button' type='button'><img src='/images/delete.svg' /></button>
+      </div>
+      <div class='container'>
+        <label class='filter'>Price (USD)</label>
+        <select class='filter-dropdown filter' name='price'>
+          <option value="lt" selected="selected">≤</option>
+          <option value="gt">≥</option>
+          <option value="e">=</option>
+        </select>
+        <input id='price-filter-value' class='filter filter-value' type='number'>
+      </div>
+      <div class='container'>
+        <label class='filter'>% Change</label>
+        <select class="filter-dropdown filter" name='change'>
+          <option value="lt" selected="selected">≤</option>
+          <option value="gt">≥</option>
+          <option value="e">=</option>
+        </select>
+        <input id='change-filter-value' class='filter filter-value' type='number'>
+      </div>
+      <div class='container'>
+        <label class='filter'>Market Cap</label>
+        <select class="filter-dropdown filter" name='marketcap'>
+          <option value="lt" selected="selected">≤</option>
+          <option value="gt">≥</option>
+          <option value="e">=</option>
+        </select>
+        <input id='cap-filter-value' class='filter filter-value' type='number'>
+      </div>
+    </form>
   </div>
   <script src=js/init.js></script>
   <script src="js/main.js"></script>

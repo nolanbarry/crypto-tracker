@@ -1,0 +1,90 @@
+#filter {
+  position: absolute;
+  background-color: #1A412C;
+  padding: 10px;
+  border-radius: 15px;
+  max-width: 300px;
+}
+
+.closed {
+  display: none;
+}
+
+#filter label {
+  color: #eeeeee;
+  font-weight: 500;
+  font-size: 13px;
+  width: 150px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+}
+
+#filter label::after {
+  content: ':';
+}
+
+.img-button {
+  width: 25px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.img-button img {
+  width: 100%;
+  background-color: transparent;
+  opacity: 0.6;
+}
+
+.img-button img:hover {
+  opacity: 1;
+}
+
+.filter {
+  font-family: nunito, sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  padding: 3px;
+  height: 35px;
+  outline: none;
+  border: none;
+}
+
+#filter .filter-header {
+  font-size: 20px;
+  font-weight: bold;
+  width: 100%;
+  text-transform: lowercase;
+}
+
+.filter:focus {
+  outline: none;
+}
+
+.filter-dropdown {
+  margin: 5px 0 5px 5px;
+  border-radius: 20px 0 0 20px;
+  width: 50px;
+  text-align: right;
+}
+
+.filter-value {
+  margin: 5px 5px 5px 0px;
+  border-radius: 0 20px 20px 0;
+  width: 100%;
+}
+
+@media only screen and (min-width: 601px) {
+  #filter::before {
+    content: "";
+    position: absolute;
+    top: 20%;
+    margin-top: -15px;
+    left: -30px;
+    border: solid 15px transparent;
+    border-right-color: #1A412C;
+    z-index: 1;
+  }
+}

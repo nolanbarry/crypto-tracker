@@ -3,6 +3,7 @@ let coins;
 let coinsLoaded = false;
 retrieveCoinData();
 setInterval(retrieveCoinData, 10000);
+let sidebar = document.querySelector('#sidebar');
 /*** API CALLS ***/
 /* https://www.coingecko.com/en/api */
 /* https://developers.coinranking.com/api/documentation/ */
@@ -15,7 +16,6 @@ function retrieveCoinData() {
     return response.json();
   }).then(function(data) {
     coins = data.data.coins;
-    let sidebar = document.getElementById('sidebar');
     for(let coin of coins) {
       if (coinsLoaded) updateCoinPrice(coin);
       else sidebar.appendChild(createCoinSidebarListing(coin));

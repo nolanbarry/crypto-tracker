@@ -163,7 +163,8 @@ sidebar-listing {
   margin: 3px 10px;
   font-family: nunito, sans-serif;
   font-size: 20px;
-  font-weight: 900;
+  font-weight: bold;
+  outline: none;
 }
 
 .sidebar-change::after {

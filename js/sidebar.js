@@ -1,4 +1,3 @@
-let sidebar = document.querySelector('#sidebar');
 let search = document.querySelector('#sidebar-search-container');
 // resizes sidebar height when window is resized
 function resizeSidebar() {
@@ -87,3 +86,37 @@ function searchClearFade(fadeIn) {
     requestAnimationFrame(fadeAnim);
   }
 }
+
+/*** sidebar filter ***/
+let filterBox = document.querySelector('#filter');
+// document.body.remove(filterBox);
+// show/hide filters
+document.querySelector('#sidebar-search-filter-toggle').addEventListener('click', () => {
+  console.log('click');
+  if (filterBox.classList.contains('closed')) {
+    // open filters
+    // desktop
+    if (window.innerWidth > 600) {
+      filterBox.style.position = 'fixed';
+      filterBox.style.left = sidebar.clientWidth + "px";
+      filterBox.style.top = document.querySelector('#header').clientHeight + 10 + 'px';
+      document.after(filterBox);
+    } // mobile
+    else {
+      filterBox.style.position = 'static';
+      search.after(filterBox);
+    }
+    filterBox.classList.remove('closed');
+  } else {
+    // close filters
+    filterBox.classList.add('closed');
+    document.remove(filterBox);
+  }
+});
+// clear filters button
+document.querySelector('#filter-clear').addEventListener('click', () => {
+  values = document.getElementsByClassName('filter-value');
+  for(let element of values) {
+    element.value = '';
+  }
+})
