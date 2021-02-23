@@ -2,7 +2,7 @@
 let coins;
 let coinsLoaded = false;
 retrieveCoinData();
-setInterval(retrieveCoinData, 1000);
+setInterval(retrieveCoinData, 10000);
 /*** API CALLS ***/
 /* https://www.coingecko.com/en/api */
 /* https://developers.coinranking.com/api/documentation/ */
