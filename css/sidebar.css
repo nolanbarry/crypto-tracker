@@ -33,6 +33,7 @@
   margin: 0;
   padding: 0;
   transition: transform 0.4s;
+  display: flex;
 }
 
 #sidebar-search {
@@ -46,6 +47,30 @@
   font-weight: 500;
   font-size: 20px;
   transition: transform 0.2s;
+}
+
+#sidebar-search:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+#sidebar-search-clear {
+  background-color: transparent;
+  width: 15px;
+  margin: -12%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+#sidebar-search-clear:focus {
+  outline: none;
+}
+
+#sidebar-search-clear img {
+  opacity: 0.3;
+  width: 100%;
 }
 
 .scroll-down {
