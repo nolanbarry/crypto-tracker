@@ -56,7 +56,7 @@ function truncateDecimal(value, decimals) {
 }
 
 function beautify(num) {
-  return num.toLocaleString(undefined,  { minimumFractionDigits: 2 });
+  return Number(num).toLocaleString(undefined,  { minimumFractionDigits: 2 });
 }
 
 function createCoinSidebarListing(coin) {

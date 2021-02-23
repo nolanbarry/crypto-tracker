@@ -12,5 +12,18 @@
   font-style: normal;
   text-transform: uppercase;
   text-shadow: 5px 5px 10px rgba(0, 0, 0, .5);
-  color: #b7e4c7
+  color: #b7e4c7;
+  font-size: 45px;
+}
+
+@media only screen and (max-width: 600px) {
+  #header h1 {
+    font-size: 30px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  #header h1 {
+    font-size: 20px;
+  }
 }

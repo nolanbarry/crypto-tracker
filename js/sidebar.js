@@ -65,7 +65,7 @@ document.querySelector('#sidebar-search-clear').addEventListener('click', () => 
   performSearchFiltering();
 });
 
-// call to cade search clear button fade in and out
+// call to fade search clear button in and out
 let maxOpacity = 0.3
 let fade = {fadeIn: false, running: false};
 function searchClearFade(fadeIn) {
@@ -76,7 +76,7 @@ function searchClearFade(fadeIn) {
     if (oldTime == null) oldTime = currentTime;
     let target = fade.fadeIn ? maxOpacity : 0;
     let img = document.querySelector('#sidebar-search-clear img');
-    img.style.opacity = Number(img.style.opacity) + (currentTime - oldTime) / 300 * (fade.fadeIn ? 1 : -1);
+    img.style.opacity = Number(img.style.opacity) + (currentTime - oldTime) / 500 * (fade.fadeIn ? 1 : -1);
     if (fade.fadeIn && img.style.opacity > target) img.style.opacity = target;
     else if (!fade.fadeIn && img.style.opacity <= 0) img.style.opacity = 0;
     if (img.style.opacity == target) {

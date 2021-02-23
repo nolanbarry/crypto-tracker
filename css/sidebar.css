@@ -73,6 +73,30 @@
   width: 100%;
 }
 
+#sidebar-search-filter-toggle {
+  background-color: transparent;
+  width: 30px;
+  display: flex;
+  margin-left: 21%;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+#sidebar-search-filter-toggle:focus {
+  outline: none;
+}
+
+#sidebar-search-filter-toggle img {
+  opacity: 0.5;
+  width: 100%;
+}
+
+#sidebar-search-filter-toggle:hover img {
+  opacity: 0.75;
+  cursor: pointer;
+}
+
 .scroll-down {
   transform: translate3d(0, -100%, 0);
 }
@@ -165,4 +189,14 @@ sidebar-listing {
 
 .no-change {
   color: #FFFF6D;
+}
+
+@media only screen and (max-width: 600px) {
+  #sidebar {
+    width: 100%;
+  }
+
+  #sidebar-search-container {
+    width: 100%;
+  }
 }
