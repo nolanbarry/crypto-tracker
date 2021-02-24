@@ -40,25 +40,63 @@ sidebar.addEventListener('scroll', () => {
 function performSearchFiltering() {
   let listings = sidebar.getElementsByClassName('sidebar-listing');
   let searchText = document.querySelector('#sidebar-search').value.toUpperCase();
+  sidebar.scrollTop = 0;
   if (searchText == '')
     searchClearFade(false);
   else
     searchClearFade(true);
   for(let coin of coins) {
-    if (searchText == '') {
-      document.getElementById(coin.symbol).style.display = 'initial';
-      continue;
+    let included = true;
+    if (searchText != '') { // text
+      let key = (coin.name + coin.symbol).toUpperCase();
+      if(!key.includes(searchText)) included = false;
     }
-    sidebar.scrollTop = 0;
-    let key = (coin.name + coin.symbol).toUpperCase();
-    if(key.includes(searchText))
+    let getDec = str => {
+      let s = str.split('.');
+      if (s == null || s.length < 2) return 0;
+      else return s[1].length;
+    }
+    let priceFilter = document.querySelector('#price-filter-value').value;
+    if (priceFilter != '') {
+      let operator = document.querySelector('#price-filter-operator').value;
+      if(operator == 'lt') { if (coin.price > Number(priceFilter)) included = false; }
+      else if (operator == 'gt') { if (coin.price < Number(priceFilter)) included = false; }
+      else if (operator == 'e') { if (truncateDecimal(coin.price, getDec(priceFilter)) != Number(priceFilter)) included = false; }
+    }
+    let changeFilter = document.querySelector('#change-filter-value').value;
+    if (changeFilter != '') {
+      let operator = document.querySelector('#change-filter-operator').value;
+      if(operator == 'lt') { if (coin.change > Number(changeFilter)) included = false; }
+      else if (operator == 'gt') { if (coin.change < Number(changeFilter)) included = false; }
+      else if (operator == 'e') { if (truncateDecimal(coin.change, getDec(changeFilter)) != Number(changeFilter)) included = false; }
+    }
+    let capFilter = document.querySelector('#cap-filter-value').value;
+    if (capFilter != '') {
+      let operator = document.querySelector('#cap-filter-operator').value;
+      if(operator == 'lt') { if (coin.marketCap > Number(capFilter)) included = false; }
+      else if (operator == 'gt') { if (coin.marketCap < Number(capFilter)) included = false; }
+      else if (operator == 'e') { if (truncateDecimal(coin.marketCap, getDec(capFilter)) != Number(capFilter)) included = false; }
+    }
+    if (priceFilter + changeFilter + capFilter != '') {
+      console.log('yo');
+      document.querySelector('#sidebar-search-filter-toggle').style.boxShadow = '0 0 20px rgba(255, 255, 255, 0.5)';
+    } else {
+      document.querySelector('#sidebar-search-filter-toggle').style.boxShadow = '';
+    }
+    if(included)
       document.getElementById(coin.symbol).style.display = 'initial';
-    else
-      document.getElementById(coin.symbol).style.display = 'none';
+    else document.getElementById(coin.symbol).style.display = 'none';
   }
 }
-document.querySelector('#sidebar-search').addEventListener('keyup', performSearchFiltering, false);
-document.querySelector('#sidebar-search').addEventListener('change', performSearchFiltering, false);
+document.querySelector('#sidebar-search').addEventListener('keyup', performSearchFiltering);
+document.querySelector('#sidebar-search').addEventListener('change', performSearchFiltering);
+document.querySelector('#price-filter-value').addEventListener('keyup', performSearchFiltering);
+document.querySelector('#price-filter-operator').addEventListener('change', performSearchFiltering);
+document.querySelector('#change-filter-value').addEventListener('keyup', performSearchFiltering);
+document.querySelector('#change-filter-operator').addEventListener('change', performSearchFiltering);
+document.querySelector('#cap-filter-value').addEventListener('keyup', performSearchFiltering);
+document.querySelector('#cap-filter-operator').addEventListener('change', performSearchFiltering);
+
 
 document.querySelector('#sidebar-search-clear').addEventListener('click', () => {
   document.querySelector('#sidebar-search').value = '';
@@ -123,6 +161,7 @@ document.querySelector('#filter-clear').addEventListener('click', () => {
   for(let element of values) {
     element.value = '';
   }
+  performSearchFiltering();
 })
 // filter slide animation for mobile styles only
 let filterSlide = {slideOut: false, running: false, margin: 0};
@@ -159,6 +198,7 @@ function fadeFilterBox(fadeIn) {
   if(fadeIn) {
     filterBox.style.opacity = 0;
     filterBox.classList.remove('closed');
+    filterBox.focus();
   }
   filterFade.fadeIn = fadeIn;
   function fadeAnim(currentTime, oldTime) {
@@ -170,7 +210,6 @@ function fadeFilterBox(fadeIn) {
       filterBox.style.opacity = target;
       filterFade.running = false;
       if (!filterFade.fadeIn) filterBox.classList.add('closed');
-      console.log('done');
     } else requestAnimationFrame(newTime => fadeAnim(newTime, currentTime));
   }
   if (!filterFade.running) {

@@ -35,7 +35,7 @@
       </div>
       <div class='container'>
         <label class='filter'>Price (USD)</label>
-        <select class='filter-dropdown filter' name='price'>
+        <select class='filter-dropdown filter' id='price-filter-operator'>
           <option value="lt" selected="selected">≤</option>
           <option value="gt">≥</option>
           <option value="e">=</option>
@@ -44,7 +44,7 @@
       </div>
       <div class='container'>
         <label class='filter'>% Change</label>
-        <select class="filter-dropdown filter" name='change'>
+        <select class="filter-dropdown filter" id='change-filter-operator'>
           <option value="lt" selected="selected">≤</option>
           <option value="gt">≥</option>
           <option value="e">=</option>
@@ -53,7 +53,7 @@
       </div>
       <div class='container'>
         <label class='filter'>Market Cap</label>
-        <select class="filter-dropdown filter" name='marketcap'>
+        <select class="filter-dropdown filter" id='cap-filter-operator'>
           <option value="lt" selected="selected">≤</option>
           <option value="gt">≥</option>
           <option value="e">=</option>
@@ -61,7 +61,10 @@
         <input id='cap-filter-value' class='filter filter-value' type='number'>
       </div>
     </form>
+
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
   <script src=js/init.js></script>
   <script src="js/main.js"></script>
   <script src="js/sidebar.js"></script>

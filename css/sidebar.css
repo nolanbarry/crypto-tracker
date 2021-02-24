@@ -69,6 +69,7 @@
 }
 
 #sidebar-search-clear img {
+  user-select: none;
   opacity: 0.3;
   width: 100%;
 }
@@ -88,6 +89,7 @@
 }
 
 #sidebar-search-filter-toggle img {
+  user-select: none;
   opacity: 0.5;
   width: 100%;
 }
