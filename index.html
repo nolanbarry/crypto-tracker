@@ -14,13 +14,14 @@
   <link rel='stylesheet' href='css/header.css'>
   <link rel='stylesheet' href='css/sidebar.css'>
   <link rel='stylesheet' href='css/sidebar-filter.css'>
+  <link rel='stylesheet' href='css/coin-info.css'>
 </head>
 
 <body>
   <div id='header'>
     <h1>Crypto tracker</h1>
   </div>
-  <div id='container'>
+  <div id='main-body' class='container'>
     <div id='sidebar'>
       <form id='sidebar-search-container'>
         <input id='sidebar-search' placeholder='search' autocomplete='off' autocapitalize='off' autocorrect='off' spellcheck='false'>
@@ -61,10 +62,10 @@
         <input id='cap-filter-value' class='filter filter-value' type='number'>
       </div>
     </form>
-    <div id='placeholder'>
-      <h1>Choose a coin to get started!</h1>
-    </div>
     <div id='coin-info'>
+      <div id='placeholder'>
+        <h1>Choose a coin to get started!</h1>
+      </div>
       <div class='container'>
         <h1 id='coin-name'></h1>
         <div id='coin-change'></div>
@@ -74,11 +75,11 @@
       </div>
       <div id='chart-container'><canvas id="chart"></canvas></div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-    <script src=js/init.js></script>
-    <script src="js/main.js"></script>
-    <script src="js/sidebar.js"></script>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+  <script src=js/init.js></script>
+  <script src="js/main.js"></script>
+  <script src="js/sidebar.js"></script>
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 let search = document.querySelector('#sidebar-search-container');
 // resizes sidebar height when window is resized
 function resizeSidebar() {
-  sidebar.style.height = window.innerHeight - document.getElementById('header').clientHeight + "px";
+  document.querySelector('#main-body').style.height = window.innerHeight - document.getElementById('header').clientHeight + "px";
 }
 window.addEventListener('resize', resizeSidebar);
 resizeSidebar();
@@ -39,7 +39,7 @@ sidebar.addEventListener('scroll', () => {
 
 // choose a coin
 function coinChoose(coin) {
-  
+
 }
 
 function performSearchFiltering() {
