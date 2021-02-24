@@ -37,6 +37,11 @@ sidebar.addEventListener('scroll', () => {
   lastScroll = currentScroll;
 });
 
+// choose a coin
+function coinChoose(coin) {
+  
+}
+
 function performSearchFiltering() {
   let listings = sidebar.getElementsByClassName('sidebar-listing');
   let searchText = document.querySelector('#sidebar-search').value.toUpperCase();

@@ -70,6 +70,7 @@ function createCoinSidebarListing(coin) {
   let subheading = element('div', {className: 'container price-subheading'}, price, percentChange);
   // combine into listing
   let listing = element('a', {className: 'sidebar-listing', id: coin.symbol, href: `#${coin.symbol}`}, heading, subheading);
+  listing.addEventListener('click', () => coinChoose(coin));
   return listing;
 }
 
@@ -81,3 +82,7 @@ function updateCoinPrice(coin) {
   change.innerHTML = beautify(truncateDecimal(Math.abs(coin.change), 2));
   change.className = 'sidebar-change ' + determineCoinChangeClass(coin.change);
 }
+
+window.addEventListener('hashchange', () => {
+  console.log('success');
+});
