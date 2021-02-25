@@ -23,6 +23,13 @@
   overflow: hidden;
 }
 
+.mobile, .mobile-hidden {
+  position: fixed;
+  top: 75px;
+  left: 0;
+  width: 100vw;
+}
+
 #coin-name {
   font-family: 'Nova Mono', monospace;
   font-weight: 800;
@@ -181,6 +188,20 @@
   background-color: #eeeeee !important;
 }
 
+#close {
+  width: 20px;
+  height: 20px;
+  position: fixed;
+  right: 10px;
+  top: 85px;
+  filter: invert();
+  opacity: 0.5;
+}
+
+#close:hover {
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 900px) {
   #coin-name {
     font-size: 40px;
@@ -196,7 +217,8 @@
 
   #detailed-look {
     flex-flow: column;
-    max-width: 300px;
+    max-width: 400px;
+    padding-left: 30px;
   }
 }
 
@@ -213,8 +235,7 @@
     content: '';
   }
 
-  #detailed-look {
-    flex-flow: column;
-    max-width: 300px;
+  #placeholder {
+    font-size: 30px;
   }
 }

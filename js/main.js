@@ -12,7 +12,7 @@ function retrieveAllCoinData() {
       if (coinsLoaded) updateSidebarCoinPrice(coin);
       else sidebar.appendChild(createCoinSidebarListing(coin));
     }
-    if (!coinsLoaded) hashChange(); // fills in main page
+    if (!coinsLoaded) hashChange();
     coinsLoaded = true;
   });
 }
@@ -82,11 +82,26 @@ function createCoinSidebarListing(coin) {
   return listing;
 }
 
+function determineDisplayStyle() {
+  console.log('resize');
+  let previous = DISPLAY_STYLE;
+  if (window.innerWidth <= 601) {
+    DISPLAY_STYLE = 'mobile';
+  } else {
+    DISPLAY_STYLE = 'desktop';
+  }
+  if (previous != DISPLAY_STYLE) {
+    window.dispatchEvent(new Event('stylechange'));
+  }
+}
+$(window).on('resize', determineDisplayStyle);
 
 
 // on page load:
 let coins;
 let coinsLoaded = false;
+let DISPLAY_STYLE = 'none';
+determineDisplayStyle();
 retrieveAllCoinData();
 setInterval(retrieveAllCoinData, 10000);
 let sidebar = document.querySelector('#sidebar');

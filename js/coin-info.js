@@ -1,11 +1,12 @@
 function displayPlaceholder(hide) {
   let elements = document.querySelector('#coin-info').children;
   for(let el of elements) {
-    if (el == document.querySelector('#placeholder'))
+    if (el == $('#placeholder')[0])
       el.style.display = hide ? 'none' : '';
     else
       el.style.display = hide ? '' : 'none' ;
   }
+  $('#close')[0].style.display =  '';
 }
 
 // called when page is reloaded or hash changes to update coin display info
@@ -18,12 +19,23 @@ function hashChange() {
   if (symbol == undefined || symbol == '') {
     document.querySelector('#placeholder h1').innerHTML = "Choose a coin to get started!";
     displayPlaceholder(false);
+    if (DISPLAY_STYLE == 'mobile') {
+      sidebar.classList.remove('sidebar-hidden');
+      $('#coin-info')[0].classList.remove('mobile');
+      $('#coin-info')[0].classList.add('mobile-hidden');
+    }
   }
   else if (coin == undefined) {
     document.querySelector('#placeholder h1').innerHTML = "Sorry! We couldn't find that coin.";
     displayPlaceholder(false);
   }
   else {
+    if (DISPLAY_STYLE == 'mobile') {
+      sidebar.classList.add('sidebar-hidden');
+      $('#coin-info')[0].classList.add('mobile');
+      $('#coin-info')[0].classList.remove('mobile-hidden');
+    }
+    resizeChart();
     fillOutCoinInfo(coin);
     displayPlaceholder(true);
   }
@@ -32,6 +44,7 @@ function hashChange() {
 window.addEventListener('hashchange', () => {
   clearCoin();
   hashChange();
+  resizeChart();
 });
 
 function fillOutCoinInfo(coin) {
@@ -97,9 +110,28 @@ function animateTextShake() {
   }
 }
 
+function styleChange() {
+  console.log('STYLE CHANGE: ' + DISPLAY_STYLE);
+  if(DISPLAY_STYLE == 'desktop') {
+    $('#coin-info')[0].classList.remove('mobile');
+    $('#coin-info')[0].classList.remove('mobile-hidden');
+    sidebar.classList.remove('sidebar-hidden');
+  } else {
+    document.location.hash = '';
+    $('#coin-info')[0].classList.add('mobile-hidden');
+  }
+}
+
 $('#period-buttons button').on('click', function(event) {
   let element = event.target;
   updateChart(currentCoin.uuid, element.name);
   $('#period-buttons .selected')[0].classList.remove('selected');
   element.classList.add('selected');
 });
+
+$(window).on('stylechange', styleChange);
+$('#close').on('click', function() {
+  window.location.hash = '';
+})
+
+styleChange();
