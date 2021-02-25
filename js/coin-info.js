@@ -56,7 +56,6 @@ function fillOutCoinInfo(coin) {
     return response.json();
   }).then(data => {
     let coin = data.data.coin;
-    console.log(coin);
     let link = coin.links.reduce((a, b) => b.type == 'website' ? b : a);
     $('#marketcap')[0].innerHTML = numeral(coin.marketCap).format('$0,0.0a');
     $('#24hr-volume')[0].innerHTML = numeral(coin["24hVolume"]).format('0.00a');

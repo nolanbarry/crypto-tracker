@@ -78,7 +78,7 @@ function createCoinSidebarListing(coin) {
   let percentChange = element('h2', {className: 'sidebar-change ' + determineCoinChangeClass(coin.change), innerHTML: beautify(truncateDecimal(Math.abs(coin.change), 2))});
   let subheading = element('div', {className: 'container price-subheading'}, price, percentChange);
   // combine into listing
-  let listing = element('a', {className: 'sidebar-listing', id: coin.symbol, href: `#${coin.symbol}`}, heading, subheading);
+  let listing = element('a', {className: 'sidebar-listing', id: "c" + coin.symbol, href: `#${coin.symbol}`}, heading, subheading);
   return listing;
 }
 
