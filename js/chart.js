@@ -42,8 +42,8 @@ function createChart(uuid, timePeriod) {
               data: {
                 datasets: [{
                   data: data.dataset,
-                  fill: true,
                   borderColor: color,
+                  fill: false,
                   pointBorderColor: "rgba(0, 0, 0, 0)",
                   pointBackgroundColor: "rgba(0, 0, 0, 0)",
                   lineTension: .1
