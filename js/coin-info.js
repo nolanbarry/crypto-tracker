@@ -50,7 +50,7 @@ function fillOutCoinInfo(coin) {
     $('#coin-price')[0].classList.add('header-gain');
     $('#coin-price')[0].classList.remove('header-loss');
   }
-  chartDisplay(coin.uuid, '24h');
+  chartDisplay(coin.uuid, $('#period-buttons .selected')[0].name);
   let coinDetailURL = `https://api.coinranking.com/v2/coin/${coin.uuid}`;
   retrieveCR(coinDetailURL).then(response => {
     return response.json();
@@ -77,6 +77,7 @@ function clearCoin() {
 animateTextShake()
 function animateTextShake() {
   let r = (l, h) => Math.floor(Math.random() * (h-l + 1)) + l;
+  let animID = setInterval(() => requestAnimationFrame(anim), 75);
   let anim = function() {
     let coin = currentCoin;
     if (coin == null) return;
@@ -87,8 +88,10 @@ function animateTextShake() {
     } else {
       $('#coin-price')[0].style.textShadow = `${r(-3, 3)}px ${r(-1, 1)}px ${5}px ${priceAccent} ${r(3, 5)/10})`;
     }
+    if (window.location.hash == "" || window.location.hash == null) {
+      clearInterval(animID);
+    }
   }
-  setInterval(() => requestAnimationFrame(anim), 75);
 }
 
 $('#period-buttons button').on('click', function(event) {

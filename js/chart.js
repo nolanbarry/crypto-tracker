@@ -39,7 +39,7 @@ function createChart(uuid, timePeriod) {
                   borderColor: color,
                   pointBorderColor: "rgba(0, 0, 0, 0)",
                   pointBackgroundColor: "rgba(0, 0, 0, 0)",
-                  lineTension: 0.5
+                  lineTension: .1
                 }]
               },
               options: {
