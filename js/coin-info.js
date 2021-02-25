@@ -90,3 +90,10 @@ function animateTextShake() {
   }
   setInterval(() => requestAnimationFrame(anim), 75);
 }
+
+$('#period-buttons button').on('click', function(event) {
+  let element = event.target;
+  updateChart(currentCoin.uuid, element.name);
+  $('#period-buttons .selected')[0].classList.remove('selected');
+  element.classList.add('selected');
+});

@@ -60,7 +60,7 @@ function beautify(num) {
 }
 
 function updateSidebarCoinPrice(coin) {
-  let listing = document.getElementById(coin.symbol);
+  let listing = document.getElementById("c" + coin.symbol);
   let price = listing.getElementsByClassName('sidebar-price')[0];
   let change = listing.getElementsByClassName('sidebar-change')[0];
   price.innerHTML = beautify(truncateNumber(coin.price, 7));
