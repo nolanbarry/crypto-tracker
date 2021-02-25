@@ -17,12 +17,13 @@ function hashChange() {
   let coin = null;
   if (c.length != 0) coin = c[0];
   if (symbol == undefined || symbol == '') {
-    document.querySelector('#placeholder h1').innerHTML = "Choose a coin to get started!";
-    displayPlaceholder(false);
     if (DISPLAY_STYLE == 'mobile') {
       sidebar.classList.remove('sidebar-hidden');
       $('#coin-info')[0].classList.remove('mobile');
       $('#coin-info')[0].classList.add('mobile-hidden');
+    } else {
+      document.querySelector('#placeholder h1').innerHTML = "Choose a coin to get started!";
+      displayPlaceholder(false);
     }
   }
   else if (coin == undefined) {
