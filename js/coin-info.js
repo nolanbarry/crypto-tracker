@@ -50,7 +50,7 @@ function fillOutCoinInfo(coin) {
     $('#coin-price')[0].classList.add('header-gain');
     $('#coin-price')[0].classList.remove('header-loss');
   }
-  createChart(coin.uuid, '24h');
+  chartDisplay(coin.uuid, '24h');
   let coinDetailURL = `https://api.coinranking.com/v2/coin/${coin.uuid}`;
   retrieveCR(coinDetailURL).then(response => {
     return response.json();

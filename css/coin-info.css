@@ -121,13 +121,14 @@
 }
 
 #chart-container {
-  margin-top: 50px;
+  margin-top: 20px;
   min-height: 400px;
-  width: 100%;
+  width: 95%;
   padding: 20px;
 }
 
 #chart-indicator {
+  pointer-events: none;
   position: fixed;
   max-width: 2px;
   width: 2px;

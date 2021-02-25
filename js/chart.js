@@ -7,8 +7,9 @@ let format = [
   {period: '1y', format: 'MMM D, h a'},
   {period: '5y', format: 'MMM D, YYYY'}
 ];
-let linechart = null;
-function chart(uuid, timePeriod) {
+
+let lineChart = null;
+function chartDisplay(uuid, timePeriod) {
   if (lineChart == null) createChart(uuid, timePeriod);
   else updateChart(uuid, timePeriod);
 }
@@ -74,6 +75,12 @@ function createChart(uuid, timePeriod) {
                 tooltips: {
                   mode: 'index',
                   intersect: false,
+                  bodyFontFamily: 'nunito, sans-serif',
+                  bodyFontStyle: 800,
+                  bodyFontSize: 20,
+                  titleFontFamily: 'inter, sans-serif',
+                  titleFontSize: 15,
+                  displayColors: false,
                   callbacks: {
                       label: function(tooltipItem, data) {
                         updateIndicator(tooltipItem.x);
@@ -104,18 +111,17 @@ function updateChart(uuid, timePeriod) {
     chart = $('#chart')[0];
     lineChart.data.datasets[0].data = data.dataset;
     lineChart.data.datasets[0].borderColor = color;
+    lineChart.update();
   });
 }
 
-let mouseOnCanvasDown = 0;
 function updateIndicator(x) {
-  mouseOnCanvasDown = 0;
   let ind = $('#chart-indicator')[0];
   let chartEl = $('#chart')[0];
   let rect = chartEl.getBoundingClientRect();
   ind.style.display = '';
   ind.style.minHeight = chartEl.clientHeight - 30 + "px";;
-  ind.style.left = rect.left + x + "px";
+  if (x != null)  ind.style.left = rect.left + x + "px";
   ind.style.top = rect.top + 15 + "px";
 }
 
@@ -123,3 +129,6 @@ function updateIndicator(x) {
 $(window).on('mouseup', () => {
   $('#chart-indicator')[0].style.display = 'none';
 });
+
+$(window).on('resize', () => $('#chart-indicator')[0].style.display = 'none');
+$('#chart').on('mouseout', () => $('#chart-indicator')[0].style.display = 'none');
