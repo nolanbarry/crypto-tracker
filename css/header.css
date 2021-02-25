@@ -1,14 +1,14 @@
 #header {
   user-select: none;
-  padding: 15px;
   background-color: #2d6a4f;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, .5);
   z-index: 99;
   height: 75px;
+  min-width: 300px;
 }
 
 #header h1 {
-  font-family: bely-display, sans-serif;
+  font-family: 'Nova Mono', monospace;
   font-weight: 400;
   font-style: normal;
   text-transform: uppercase;
@@ -19,12 +19,12 @@
 
 @media only screen and (max-width: 600px) {
   #header h1 {
-    font-size: 30px;
+    font-size: 35px;
   }
 }
 
 @media only screen and (max-width: 350px) {
   #header h1 {
-    font-size: 20px;
+    font-size: 25px;
   }
 }

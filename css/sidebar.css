@@ -16,6 +16,7 @@
 
 #sidebar {
   background-color: #255C3E;
+  min-width: 300px;
   width: 300px;
   height: 100%;
   display: flex;
@@ -27,7 +28,7 @@
 
 #sidebar-search-container {
   z-index: 1;
-  width: 300px;
+  width: 100%;
   position: relative;
   background-color: #1A412C;
   margin: 0;
@@ -42,7 +43,7 @@
   background-color: #76C89B;
   margin: 10px;
   padding: 5px;
-  width: 75%;
+  width: 100%;
   font-family: nunito, sans-serif;
   font-weight: 500;
   font-size: 20px;
@@ -57,7 +58,9 @@
 #sidebar-search-clear {
   background-color: transparent;
   width: 15px;
-  margin: -12%;
+  position: relative;
+  left: -35px;
+  top: -7.5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,8 +80,8 @@
 #sidebar-search-filter-toggle {
   background-color: transparent;
   width: 30px;
+  margin: 0 15px 0 0px;
   display: flex;
-  margin-left: 21%;
   align-items: center;
   justify-content: center;
   border: none;

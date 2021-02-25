@@ -1,7 +1,7 @@
 let search = document.querySelector('#sidebar-search-container');
 // resizes sidebar height when window is resized
 function resizeSidebar() {
-  document.querySelector('#main-body').style.height = window.innerHeight - document.getElementById('header').clientHeight + "px";
+  document.querySelector('#full-body').style.height = window.innerHeight - document.getElementById('header').clientHeight + "px";
 }
 window.addEventListener('resize', resizeSidebar);
 resizeSidebar();
@@ -37,10 +37,6 @@ sidebar.addEventListener('scroll', () => {
   lastScroll = currentScroll;
 });
 
-// choose a coin
-function coinChoose(coin) {
-
-}
 
 function performSearchFiltering() {
   let listings = sidebar.getElementsByClassName('sidebar-listing');
@@ -83,10 +79,9 @@ function performSearchFiltering() {
       else if (operator == 'e') { if (truncateDecimal(coin.marketCap, getDec(capFilter)) != Number(capFilter)) included = false; }
     }
     if (priceFilter + changeFilter + capFilter != '') {
-      console.log('yo');
-      document.querySelector('#sidebar-search-filter-toggle').style.boxShadow = '0 0 20px rgba(255, 255, 255, 0.5)';
+      // document.querySelector('#sidebar-search-filter-toggle').style.boxShadow = '0 0 20px rgba(255, 255, 255, 0.5)';
     } else {
-      document.querySelector('#sidebar-search-filter-toggle').style.boxShadow = '';
+      // document.querySelector('#sidebar-search-filter-toggle').style.boxShadow = '';
     }
     if(included)
       document.getElementById(coin.symbol).style.display = 'initial';

@@ -8,7 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Inconsolata&family=Merriweather&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://use.typekit.net/cts3wnx.css">
   <link rel='stylesheet' href='css/styles.css'>
   <link rel='stylesheet' href='css/header.css'>
@@ -21,12 +22,16 @@
   <div id='header'>
     <h1>Crypto tracker</h1>
   </div>
-  <div id='main-body' class='container'>
+  <div id='full-body' class='container'>
     <div id='sidebar'>
-      <form id='sidebar-search-container'>
-        <input id='sidebar-search' placeholder='search' autocomplete='off' autocapitalize='off' autocorrect='off' spellcheck='false'>
-        <button id='sidebar-search-clear' type='button'><img src='/images/clear.svg' style='opacity: 0'></button>
-        <button id='sidebar-search-filter-toggle' type='button'><img src='/images/filter.svg'></button>
+      <form id='sidebar-search-container' class='container'>
+        <div class='container' style='flex: 6;'>
+          <input id='sidebar-search' placeholder='search' autocomplete='off' autocapitalize='off' autocorrect='off' spellcheck='false'>
+          <div class='zero'>
+            <button id='sidebar-search-clear' type='button'><img src='/images/clear.svg' style='opacity: 0'></button>
+          </div>
+        </div>
+        <div class='container column' style='flex: 1'> <button id='sidebar-search-filter-toggle' type='button'><img src='/images/filter.svg'></button></div>
       </form>
     </div>
     <form id='filter' class='closed'>
@@ -64,22 +69,45 @@
     </form>
     <div id='coin-info'>
       <div id='placeholder'>
-        <h1>Choose a coin to get started!</h1>
+        <h1></h1>
       </div>
+      <div id='coin-name' class='coin-header'></div>
       <div class='container'>
-        <h1 id='coin-name'></h1>
-        <div id='coin-change'></div>
+        <h2 id='coin-price' class='coin-header'></h2>
+        <div id='coin-change' class='coin-header'></div>
       </div>
-      <div class='container'>
-        <h2 id='coin-price'></h2>
+      <div id='detailed-look' class='container'>
+        <div class='container detail-group'>
+          <div class='container detail-col'>
+            <div class='detail detail-label'>Market cap:</div>
+            <div class='detail detail-label'>24 hour vol:</div>
+          </div>
+          <div class='container detail-col'>
+            <div id='marketcap' class='detail detail-value'></div>
+            <div id='24hr-volume' class='detail detail-value'></div>
+          </div>
+        </div>
+        <div class='container detail-group'>
+          <div class='container detail-col'>
+            <div class='detail detail-label'>All-time high:</div>
+            <div class='detail detail-label'>Website:</div>
+          </div>
+          <div class='container detail-col'>
+            <div id='all-time-high' class='detail detail-value'></div>
+            <a id='website' class='detail detail-value' target='_blank' style='display: block;'></a>
+          </div>
+        </div>
       </div>
       <div id='chart-container'><canvas id="chart"></canvas></div>
     </div>
   </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-  <script src=js/init.js></script>
+  <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
   <script src="js/main.js"></script>
   <script src="js/sidebar.js"></script>
+  <script src="js/coin-info.js"></script>
 </body>
 
 </html>

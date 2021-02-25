@@ -1,27 +1,27 @@
-// on page load:
-let coins;
-let coinsLoaded = false;
-retrieveCoinData();
-setInterval(retrieveCoinData, 10000);
-let sidebar = document.querySelector('#sidebar');
 /*** API CALLS ***/
 /* https://www.coingecko.com/en/api */
 /* https://developers.coinranking.com/api/documentation/ */
-
-function retrieveCoinData() {
-  let coinRankKey = 'coinranking0c56a9b857f065ff49e44335d35cdb0b328a7c22e16b269d';
+function retrieveAllCoinData() {
   let coinRankAllURL = 'https://api.coinranking.com/v2/coins';
-  fetch(coinRankAllURL, {headers: { 'x-access-token': coinRankKey }})
+  retrieveCR(coinRankAllURL)
   .then(function(response) {
     return response.json();
   }).then(function(data) {
     coins = data.data.coins;
     for(let coin of coins) {
-      if (coinsLoaded) updateCoinPrice(coin);
+      if (coinsLoaded) updateSidebarCoinPrice(coin);
       else sidebar.appendChild(createCoinSidebarListing(coin));
     }
+    if (!coinsLoaded) hashChange(); // fills in main page
     coinsLoaded = true;
   });
+}
+
+// api call to coinranking.com
+let cors = url => `https://nlbry-cors.herokuapp.com/${url}`
+function retrieveCR(url) {
+  let coinRankKey = 'coinranking0c56a9b857f065ff49e44335d35cdb0b328a7c22e16b269d';
+  return fetch(cors(url), {headers: { 'x-access-token': coinRankKey }});
 }
 
 /*** HELPER FUNCTIONS ***/
@@ -59,6 +59,15 @@ function beautify(num) {
   return Number(num).toLocaleString(undefined,  { minimumFractionDigits: 2 });
 }
 
+function updateSidebarCoinPrice(coin) {
+  let listing = document.getElementById(coin.symbol);
+  let price = listing.getElementsByClassName('sidebar-price')[0];
+  let change = listing.getElementsByClassName('sidebar-change')[0];
+  price.innerHTML = beautify(truncateNumber(coin.price, 7));
+  change.innerHTML = beautify(truncateDecimal(Math.abs(coin.change), 2));
+  change.className = 'sidebar-change ' + determineCoinChangeClass(coin.change);
+}
+
 function createCoinSidebarListing(coin) {
   // heading
   let name = element('h1', {className: 'sidebar-name', innerHTML: coin.name});
@@ -70,19 +79,14 @@ function createCoinSidebarListing(coin) {
   let subheading = element('div', {className: 'container price-subheading'}, price, percentChange);
   // combine into listing
   let listing = element('a', {className: 'sidebar-listing', id: coin.symbol, href: `#${coin.symbol}`}, heading, subheading);
-  listing.addEventListener('click', () => coinChoose(coin));
   return listing;
 }
 
-function updateCoinPrice(coin) {
-  let listing = document.getElementById(coin.symbol);
-  let price = listing.getElementsByClassName('sidebar-price')[0];
-  let change = listing.getElementsByClassName('sidebar-change')[0];
-  price.innerHTML = beautify(truncateNumber(coin.price, 7));
-  change.innerHTML = beautify(truncateDecimal(Math.abs(coin.change), 2));
-  change.className = 'sidebar-change ' + determineCoinChangeClass(coin.change);
-}
 
-window.addEventListener('hashchange', () => {
-  console.log('success');
-});
+
+// on page load:
+let coins;
+let coinsLoaded = false;
+retrieveAllCoinData();
+setInterval(retrieveAllCoinData, 10000);
+let sidebar = document.querySelector('#sidebar');

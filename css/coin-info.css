@@ -1,5 +1,143 @@
 #placeholder {
   overflow: hidden;
+  font-family: 'Nunito', sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: calc(100vh - 75px);
+  color: #1f1f1f;
+}
+
+#coin-info {
+  padding: 20px 20px;
   width: 100%;
   height: 100%;
+  background-color: #87B597;
+  box-shadow: inset 4px 0 4px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+#coin-name {
+  font-family: 'Nova Mono', monospace;
+  font-weight: 800;
+  font-size: 85px;
+  text-transform: uppercase;
+  color: #28573D;
+  text-shadow: 2px 2px 2px rgba(0, 50, 0, 0.2);
+  overflow: visible;
+  line-height: 80%;
+}
+
+#coin-price {
+  font-family: 'Nova Mono', monospace;
+  font-size: 50px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#coin-price::before {
+  content: '$';
+}
+
+#coin-change {
+  font-family: nunito, sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  margin: 3px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 20px;
+}
+
+#coin-change::after {
+  content: '% past 24 hrs';
+}
+
+#detailed-look {
+  padding: 10px;
+  background-color: rgba(230, 230, 230, 0.5);
+  border-radius: 10px;
+  max-width: 600px;
+}
+
+.detail-group {
+  flex: 1;
+}
+
+.detail-col {
+  flex-flow: column;
+  flex: 1;
+}
+
+.detail {
+  white-space: nowrap;
+  font-family: nunito, sans-serif;
+  font-size: 20px;
+  width: 100%;
+}
+
+.detail-label {
+  font-weight: 700;
+  color: #163826;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.detail-value {
+  font-weight: normal;
+  text-align: left;
+}
+
+.detail-value:link {
+  text-decoration: none;
+}
+
+.detail-value:link:hover {
+  text-decoration: underline;
+}
+
+.detail-value:link:hover,
+.detail-value:active,
+.detail-value:visited,
+.detail-value:link {
+  color: #222266 !important;
+}
+
+@media only screen and (max-width: 900px) {
+  #coin-name {
+    font-size: 65px;
+  }
+
+  #coin-price {
+    font-size: 40px;
+  }
+
+  #coin-change {
+    font-size: 20px;
+  }
+
+  #coin-price, #coin-change {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  #detailed-look {
+    flex-flow: column;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  #coin-name {
+    font-size: 45px;
+  }
 }
