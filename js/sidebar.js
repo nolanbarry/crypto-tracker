@@ -84,8 +84,8 @@ function performSearchFiltering() {
       // document.querySelector('#sidebar-search-filter-toggle').style.boxShadow = '';
     }
     if(included)
-      document.getElementById(coin.symbol).style.display = 'initial';
-    else document.getElementById(coin.symbol).style.display = 'none';
+      document.getElementById("c" + coin.symbol).style.display = 'initial';
+    else document.getElementById("c" + coin.symbol).style.display = 'none';
   }
 }
 document.querySelector('#sidebar-search').addEventListener('keyup', performSearchFiltering);
