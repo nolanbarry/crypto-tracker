@@ -66,6 +66,9 @@ function updateSidebarCoinPrice(coin) {
   price.innerHTML = beautify(truncateNumber(coin.price, 7));
   change.innerHTML = beautify(truncateDecimal(Math.abs(coin.change), 2));
   change.className = 'sidebar-change ' + determineCoinChangeClass(coin.change);
+  if('#' + coin.symbol == window.location.hash) {
+    fillOutCoinInfo(coin)
+  }
 }
 
 function createCoinSidebarListing(coin) {
@@ -83,7 +86,6 @@ function createCoinSidebarListing(coin) {
 }
 
 function determineDisplayStyle() {
-  console.log('resize');
   let previous = DISPLAY_STYLE;
   if (window.innerWidth <= 601) {
     DISPLAY_STYLE = 'mobile';
@@ -103,5 +105,5 @@ let coinsLoaded = false;
 let DISPLAY_STYLE = 'none';
 determineDisplayStyle();
 retrieveAllCoinData();
-setInterval(retrieveAllCoinData, 10000);
+setInterval(retrieveAllCoinData, 1000);
 let sidebar = document.querySelector('#sidebar');

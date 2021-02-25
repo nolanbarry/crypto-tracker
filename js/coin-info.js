@@ -13,7 +13,7 @@ function displayPlaceholder(hide) {
 let currentCoin = null;
 function hashChange() {
   let symbol = document.location.hash;
-  let c = coins.filter(x => "#" + x.symbol == symbol);
+  let c = coins != null ? coins.filter(x => "#" + x.symbol == symbol) : [];
   let coin = null;
   if (c.length != 0) coin = c[0];
   if (symbol == undefined || symbol == '') {
@@ -112,7 +112,6 @@ function animateTextShake() {
 }
 
 function styleChange() {
-  console.log('STYLE CHANGE: ' + DISPLAY_STYLE);
   if(DISPLAY_STYLE == 'desktop') {
     $('#coin-info')[0].classList.remove('mobile');
     $('#coin-info')[0].classList.remove('mobile-hidden');
