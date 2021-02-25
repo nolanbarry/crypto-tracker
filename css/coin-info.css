@@ -1,4 +1,5 @@
 #placeholder {
+  user-select: none;
   overflow: hidden;
   font-family: 'Nunito', sans-serif;
   font-size: 30px;
@@ -78,6 +79,7 @@
   border-bottom: 3px solid rgba(0, 0, 0, 0.3);
   border-radius: 0 10px 10px 0;
   max-width: 600px;
+  padding-right: 10px;
 }
 
 .detail-group {
@@ -125,7 +127,6 @@
 
 #chart-container {
   margin-top: 20px;
-  min-height: 400px;
   width: 95%;
   padding: 20px;
 }
@@ -135,7 +136,13 @@
   position: fixed;
   max-width: 2px;
   width: 2px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+#chart {
+  padding: 0;
+  border-bottom: 1px solid #eeeeee;
+  border-left: 1px solid #eeeeee;
 }
 
 #period-buttons {
@@ -174,9 +181,9 @@
   background-color: #eeeeee !important;
 }
 
-#period-buttons @media only screen and (max-width: 900px) {
+@media only screen and (max-width: 900px) {
   #coin-name {
-    font-size: 65px;
+    font-size: 40px;
   }
 
   #coin-price {
@@ -184,21 +191,30 @@
   }
 
   #coin-change {
-    font-size: 20px;
-  }
-
-  #coin-price, #coin-change {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    font-size: 12px;
   }
 
   #detailed-look {
     flex-flow: column;
+    max-width: 300px;
   }
 }
 
 @media only screen and (max-width: 700px) {
   #coin-name {
-    font-size: 45px;
+    font-size: 30px;
+  }
+
+  #coin-price {
+    font-size: 50px;
+  }
+
+  #coin-change::after {
+    content: '';
+  }
+
+  #detailed-look {
+    flex-flow: column;
+    max-width: 300px;
   }
 }

@@ -24,6 +24,13 @@ function createChart(uuid, timePeriod) {
       y: point.price,
       t: point.timestamp * 1000
     }});
+    if (timePeriod == '5y') {
+      let i = 0;
+      data = data.filter(x => {
+        ++i;
+        return i % 3 == 0;
+      });
+    }
     return {dataset: data, change: json.data.change};
   }).then(data => {
     let color = data.change >= 0 ?
@@ -49,24 +56,19 @@ function createChart(uuid, timePeriod) {
                   xAxes: [{
                     type: 'time',
                     gridLines: {
-                      lineWidth: 3,
-                      display: false
+                      display: false,
                     },
                     ticks: {
                       display: false,
-                      fontSize: 12,
                     },
                   }],
                   yAxes: [{
                     gridLines: {
-                      lineWidth: 3
+                      display: false,
                     },
                     ticks: {
-                      maxTicksLimit: 6,
-                      fontSize: 25,
-                      fontWeight: 600,
-                      fontFamily: "nunito"
-                    },
+                      display: false,
+                    }
                   }],
                 },
                 legend: {
@@ -90,6 +92,7 @@ function createChart(uuid, timePeriod) {
                 }
               }
             });
+    resizeChart();
   });
 }
 
@@ -103,6 +106,13 @@ function updateChart(uuid, timePeriod) {
       y: point.price,
       t: point.timestamp * 1000
     }});
+    if (timePeriod == '5y') {
+      let i = 0;
+      data = data.filter(x => {
+        ++i;
+        return i % 3 == 0;
+      });
+    }
     return {dataset: data, change: json.data.change};
   }).then(data => {
     let color = data.change >= 0 ?
@@ -129,6 +139,9 @@ function updateIndicator(x) {
 $(window).on('mouseup', () => {
   $('#chart-indicator')[0].style.display = 'none';
 });
-
+function resizeChart() {
+  $('#chart-container')[0].style.height = window.innerHeight - $('#chart-container')[0].getBoundingClientRect().top - 100 + "px" ;
+}
+$(window).on('resize', resizeChart);
 $(window).on('resize', () => $('#chart-indicator')[0].style.display = 'none');
 $('#chart').on('mouseout', () => $('#chart-indicator')[0].style.display = 'none');

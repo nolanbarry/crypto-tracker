@@ -56,12 +56,15 @@ function fillOutCoinInfo(coin) {
     return response.json();
   }).then(data => {
     let coin = data.data.coin;
-    let link = coin.links.reduce((a, b) => b.type == 'website' ? b : a);
+    let link;
+    if (coin.links.length > 0)
+      link = coin.links.reduce((a, b) => b.type == 'website' ? b : a);
+    else link = {name: '-', url: ''};
     $('#marketcap')[0].innerHTML = numeral(coin.marketCap).format('$0,0.0a');
     $('#24hr-volume')[0].innerHTML = numeral(coin["24hVolume"]).format('0.00a');
     $('#all-time-high')[0].innerHTML = numeral(coin.allTimeHigh.price).format('$0,0.000')
     $('#website')[0].innerHTML = link.name;
-    $('#website')[0].href = link.url;
+    if (link.url.length > 0) $('#website')[0].href = link.url;
   });
 }
 
