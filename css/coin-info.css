@@ -24,9 +24,9 @@
 #coin-name {
   font-family: 'Nova Mono', monospace;
   font-weight: 800;
-  font-size: 85px;
+  font-size: 50px;
+  color: rgba(255, 255, 255, 0.8);
   text-transform: uppercase;
-  color: #28573D;
   text-shadow: 2px 2px 2px rgba(0, 50, 0, 0.2);
   overflow: visible;
   line-height: 80%;
@@ -34,9 +34,16 @@
 
 #coin-price {
   font-family: 'Nova Mono', monospace;
-  font-size: 50px;
+  font-size: 80px;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.8);
+}
+
+.header-gain {
+  color: #718F71;
+}
+
+.header-loss {
+  color: #FF2424;
 }
 
 #coin-price::before {
@@ -113,13 +120,27 @@
   color: #222266 !important;
 }
 
+#chart-container {
+  margin-top: 50px;
+  min-height: 400px;
+  width: 100%;
+  padding: 20px;
+}
+
+#chart-indicator {
+  position: fixed;
+  max-width: 2px;
+  width: 2px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 @media only screen and (max-width: 900px) {
   #coin-name {
     font-size: 65px;
   }
 
   #coin-price {
-    font-size: 40px;
+    font-size: 60px;
   }
 
   #coin-change {

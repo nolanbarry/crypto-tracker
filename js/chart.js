@@ -1,20 +1,43 @@
-function createChart(timePeriod) {
-  let historyURL = `https://api.coinranking.com/v2/coin/BTCogvtv82FCd/history?timePeriod=${timePeriod}`
+let format = [
+  {period: '3h', format: 'h:mm a'},
+  {period: '24h', format: 'h:mm a'},
+  {period: '7d', format: 'dddd h:mm a'},
+  {period: '30d', format: 'MMM D, h:mm a'},
+  {period: '3m', format: 'MMM D, h:mm a'},
+  {period: '1y', format: 'MMM D, h a'},
+  {period: '5y', format: 'MMM D, YYYY'}
+];
+let linechart = null;
+function chart(uuid, timePeriod) {
+  if (lineChart == null) createChart(uuid, timePeriod);
+  else updateChart(uuid, timePeriod);
+}
+
+function createChart(uuid, timePeriod) {
+  let historyURL = `https://api.coinranking.com/v2/coin/${uuid}/history?timePeriod=${timePeriod}`
   retrieveCR(historyURL)
   .then(response => {
     return response.json();
   }).then(json => {
-    console.log(json);
+    let data = json.data.history.map(point => {return {
+      y: point.price,
+      t: point.timestamp * 1000
+    }});
+    return {dataset: data, change: json.data.change};
   }).then(data => {
-    chart = ${'#chart'}[0];
-      let lineChart = new Chart(chart, {
+    let color = data.change >= 0 ?
+        "rgba(90, 244, 170, 0.9)" :
+        "rgba(241, 43, 73, 0.9)";
+    chart = $('#chart')[0];
+    lineChart = new Chart(chart, {
               type: "line",
               data: {
-                labels: data[i].map(x => x.hour + " " + x.period),
                 datasets: [{
-                  data: temps,
+                  data: data.dataset,
                   fill: true,
-                  borderColor: "rgb(0, 57, 230)",
+                  borderColor: color,
+                  pointBorderColor: "rgba(0, 0, 0, 0)",
+                  pointBackgroundColor: "rgba(0, 0, 0, 0)",
                   lineTension: 0.5
                 }]
               },
@@ -23,40 +46,80 @@ function createChart(timePeriod) {
                 maintainAspectRatio: false,
                 scales: {
                   xAxes: [{
+                    type: 'time',
                     gridLines: {
-                      display: false
-                    },
-                  }],
-                  yAxes: [{
-                    display: false,
-                    gridLines: {
+                      lineWidth: 3,
                       display: false
                     },
                     ticks: {
-                      maxTicksLimit: 6,
-                      max: (Math.max(...temps) - Math.min(...temps)) + Math.max(...temps)
+                      display: false,
+                      fontSize: 12,
                     },
-                  }]
+                  }],
+                  yAxes: [{
+                    gridLines: {
+                      lineWidth: 3
+                    },
+                    ticks: {
+                      maxTicksLimit: 6,
+                      fontSize: 25,
+                      fontWeight: 600,
+                      fontFamily: "nunito"
+                    },
+                  }],
                 },
                 legend: {
                   display: false
                 },
-                plugins: {
-                  datalabels: {
-                    font: {
-                      family: "minion-pro",
-                      weight: 700,
-                      size: "14"
-                    },
-                    color: '#111111',
-                    align: 'top',
-                    clamp: true,
-                    formatter: function(context) {
-                      return Math.round(context) + '°';
-                    }
+                tooltips: {
+                  mode: 'index',
+                  intersect: false,
+                  callbacks: {
+                      label: function(tooltipItem, data) {
+                        updateIndicator(tooltipItem.x);
+                        return '$' + beautify(truncateNumber('' + tooltipItem.value, 7));
+                      }
                   }
                 }
               }
             });
   });
 }
+
+function updateChart(uuid, timePeriod) {
+  let historyURL = `https://api.coinranking.com/v2/coin/${uuid}/history?timePeriod=${timePeriod}`
+  retrieveCR(historyURL)
+  .then(response => {
+    return response.json();
+  }).then(json => {
+    let data = json.data.history.map(point => {return {
+      y: point.price,
+      t: point.timestamp * 1000
+    }});
+    return {dataset: data, change: json.data.change};
+  }).then(data => {
+    let color = data.change >= 0 ?
+        "rgba(90, 244, 170, 0.9)" :
+        "rgba(241, 43, 73, 0.9)";
+    chart = $('#chart')[0];
+    lineChart.data.datasets[0].data = data.dataset;
+    lineChart.data.datasets[0].borderColor = color;
+  });
+}
+
+let mouseOnCanvasDown = 0;
+function updateIndicator(x) {
+  mouseOnCanvasDown = 0;
+  let ind = $('#chart-indicator')[0];
+  let chartEl = $('#chart')[0];
+  let rect = chartEl.getBoundingClientRect();
+  ind.style.display = '';
+  ind.style.minHeight = chartEl.clientHeight - 30 + "px";;
+  ind.style.left = rect.left + x + "px";
+  ind.style.top = rect.top + 15 + "px";
+}
+
+// polls to remove indicator line
+$(window).on('mouseup', () => {
+  $('#chart-indicator')[0].style.display = 'none';
+});

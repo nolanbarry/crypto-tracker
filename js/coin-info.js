@@ -36,18 +36,22 @@ window.addEventListener('hashchange', () => {
 
 function fillOutCoinInfo(coin) {
   currentCoin = coin;
-  let coinDetailURL = `https://api.coinranking.com/v2/coin/${coin.uuid}`;
   $('#coin-name')[0].innerHTML = coin.name;
   $('#coin-price')[0].innerHTML = beautify(truncateNumber(coin.price, 7));
-  $('#coin-change')[0].innerHTML = beautify(truncateDecimal(coin.change, 2));
-  createChart();
+  $('#coin-change')[0].innerHTML = numeral(coin.change).format('0.00');
   if (coin.change < 0) {
     $('#coin-change')[0].classList.remove('gain');
     $('#coin-change')[0].classList.add('loss');
+    $('#coin-price')[0].classList.remove('header-gain');
+    $('#coin-price')[0].classList.add('header-loss');
   } else {
     $('#coin-change')[0].classList.add('gain');
     $('#coin-change')[0].classList.remove('loss');
+    $('#coin-price')[0].classList.add('header-gain');
+    $('#coin-price')[0].classList.remove('header-loss');
   }
+  createChart(coin.uuid, '24h');
+  let coinDetailURL = `https://api.coinranking.com/v2/coin/${coin.uuid}`;
   retrieveCR(coinDetailURL).then(response => {
     return response.json();
   }).then(data => {
